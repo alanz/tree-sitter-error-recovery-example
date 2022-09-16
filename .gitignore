@@ -4,6 +4,5 @@ binding.gyp
 bindings/
 node_modules/
 package-lock.json
-package.json
-src/
 build/
+/src/TAGS

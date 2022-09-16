@@ -6,12 +6,14 @@ main() ->
 --------------------------------------------------
 
     (source_file
-      (fun
-        (name)
-        (args)
-        (clause_body
-          (call
-            (name)))))
+      (form
+        (fun_recovery
+          (fun
+            (name)
+            (args)
+            (clause_body
+              (call
+                (name)))))))
 
 ==================================================
 function definition: error recovery (not very good)
@@ -19,7 +21,79 @@ function definition: error recovery (not very good)
 main() ->
     call(
 --------------------------------------------------
-    (ERROR
-      (name)
-      (args)
-      (name))
+    (source_file
+      (form
+        (fun_recovery
+          (catch_all
+            (any_tok
+              (name))
+            (any_tok
+              (args))
+            (any_tok))))
+      (form
+        (fun_recovery
+          (catch_all
+            (any_tok
+              (name))
+            (any_tok)))))
+
+==================================================
+function definition: error recovery two
+==================================================
+main() ->
+    call(
+
+foo() ->
+    call().
+--------------------------------------------------
+    (source_file
+      (form
+        (fun_recovery
+          (catch_all
+            (any_tok
+              (name))
+            (any_tok
+              (args))
+            (any_tok))))
+      (form
+        (fun_recovery
+          (catch_all
+            (any_tok
+              (name))
+            (any_tok))))
+      (form
+        (fun_recovery
+          (fun
+            (name)
+            (args)
+            (clause_body
+              (call
+                (name)))))))
+
+
+==================================================
+function definition: error recovery two corrected
+==================================================
+main() ->
+    call().
+
+foo() ->
+    call().
+--------------------------------------------------
+    (source_file
+      (form
+        (fun_recovery
+          (fun
+            (name)
+            (args)
+            (clause_body
+              (call
+                (name))))))
+      (form
+        (fun_recovery
+          (fun
+            (name)
+            (args)
+            (clause_body
+              (call
+                (name)))))))
